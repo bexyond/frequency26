@@ -202,82 +202,15 @@ body[data-theme="light"] .theme-switch .sw { border-color: rgba(26,23,48,0.3); }
   100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.7); opacity: 0; }
 }
 
-/* ════════════ RADAR ════════════ */
-.radar-zone { padding: 30px 16px 60px; display: flex; flex-direction: column; align-items: center; }
-.radar-meta {
+/* ════════════ SIGNAL CONTROLS ════════════ */
+.signal-zone { padding: 30px 16px 0; display: flex; flex-direction: column; align-items: center; }
+.signal-meta {
   width: min(680px, 94vw); display: flex; justify-content: space-between; align-items: flex-end;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--faint);
   margin-bottom: 14px;
 }
-.radar-meta b { color: var(--accent); font-weight: 700; }
-.radar {
-  position: relative; width: min(680px, 94vw); aspect-ratio: 1; border-radius: 50%;
-  background: radial-gradient(circle at center, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 70%);
-  border: 1px solid var(--ring);
-  box-shadow: 0 0 0 1px var(--surface-line) inset, 0 30px 80px var(--shadow);
-  overflow: hidden;
-  -webkit-user-select: none; user-select: none;
-}
-/* range rings */
-.radar .rring {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  border: 1px solid var(--ring); border-radius: 50%; pointer-events: none; opacity: .5;
-}
-.radar .rring.r1 { width: 25%; height: 25%; }
-.radar .rring.r2 { width: 50%; height: 50%; }
-.radar .rring.r3 { width: 75%; height: 75%; }
-/* crosshair */
-.radar .cross { position: absolute; background: var(--ring); pointer-events: none; opacity: .4; }
-.radar .cross.h { top: 50%; left: 0; right: 0; height: 1px; }
-.radar .cross.v { left: 50%; top: 0; bottom: 0; width: 1px; }
-/* sweep */
-.radar .sweep {
-  position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
-  background: conic-gradient(from 0deg, color-mix(in srgb, var(--accent) 38%, transparent) 0deg, transparent 46deg, transparent 360deg);
-  animation: sweep 5s linear infinite; mix-blend-mode: screen;
-}
-body[data-theme="light"] .radar .sweep { mix-blend-mode: multiply; }
-@keyframes sweep { to { transform: rotate(360deg); } }
-.radar .center-dot {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-  width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 14px var(--accent); pointer-events: none; z-index: 5;
-}
-/* blips */
-.blip {
-  position: absolute; transform: translate(-50%,-50%);
-  width: 10px; height: 10px; border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--blip) 45%, var(--accent) 100%);
-  box-shadow: 0 0 6px var(--glow), 0 0 12px var(--glow);
-  cursor: pointer; z-index: 6;
-  animation: blipPulse 2.6s ease-in-out infinite;
-  transition: transform .15s ease;
-}
-.blip::after {
-  content: ''; position: absolute; inset: -6px; border-radius: 50%;
-  border: 1px solid var(--accent); opacity: 0; animation: blipPing 2.6s ease-out infinite;
-}
-.blip:hover { transform: translate(-50%,-50%) scale(1.5); z-index: 9; }
-.blip.fresh { animation: blipArrive 1s ease-out, blipPulse 2.6s ease-in-out 1s infinite; }
-@keyframes blipPulse { 0%,100%{opacity:.65} 50%{opacity:1} }
-@keyframes blipPing { 0%{opacity:.7; transform:scale(.6)} 100%{opacity:0; transform:scale(2.4)} }
-@keyframes blipArrive { 0%{transform:translate(-50%,-50%) scale(0); opacity:0} 40%{transform:translate(-50%,-50%) scale(2.2); opacity:1} 100%{transform:translate(-50%,-50%) scale(1)} }
-/* emit pulse on send */
-.emit {
-  position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);
-  width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent);
-  pointer-events: none; z-index: 4; opacity: .9;
-  animation: emit 1.4s ease-out forwards;
-}
-@keyframes emit { 0%{width:12px;height:12px;opacity:.9} 100%{width:100%;height:100%;opacity:0} }
-.radar-empty {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% + 40px));
-  width: 80%; text-align: center; font-family: var(--mono); font-size: 12px;
-  color: var(--faint); line-height: 1.7; pointer-events: none;
-}
-
-/* send button under radar */
-.send-row { margin-top: 30px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.signal-meta b { color: var(--accent); font-weight: 700; }
+.send-row { margin-top: 16px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .btn {
   font-family: var(--head); font-weight: 600; font-size: 14px; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 15px 30px; border-radius: 8px; cursor: pointer;
@@ -468,7 +401,7 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
 }
 @keyframes txSweep { 0%{ left:-60% } 55%,100%{ left:130% } }
 
-/* read-blip modal */
+/* read signal modal */
 .read { text-align: center; }
 .read .r-freq { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 16px; }
 .read .r-msg { font-family: 'Blender', var(--serif); font-size: 20px; line-height: 1.5; color: var(--text); margin-bottom: 18px; }
@@ -490,7 +423,7 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
   position: fixed; bottom: 22px; right: 22px; z-index: 90; display: none;
 }
 @media (max-width: 720px){
-  .radar-meta { font-size: 10px; }
+  .signal-meta { font-size: 10px; }
   .cd-cell { min-width: 64px; }
   .head { padding-left: 12px; padding-right: 12px; }
 }
@@ -520,7 +453,7 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
   <div class="kicker">Fan Signal Project</div>
   <h1 class="title">FREQUENCY <span class="x">26</span></h1>
   <div class="subtitle">Tín hiệu sinh nhật cho Bạch Hồng Cường</div>
-  <p class="tagline">Trạm thu nhận lời chúc đã mở - Gửi lời chúc của bạn như một tín hiệu, hiển thị trên màn radar cùng những lời chúc khác đến Cường</p>
+  <p class="tagline">Trạm thu nhận lời chúc đã mở - Gửi lời chúc của bạn như một tín hiệu, hiển thị cùng những lời chúc khác đến Cường trong nhật ký tín hiệu</p>
 
   <div class="countdown" id="countdown">
     <div class="cd-cell"><div class="cd-num" id="cdD">00</div><div class="cd-lab">Ngày</div></div>
@@ -530,17 +463,10 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
   </div>
 </header>
 
-<section class="radar-zone">
-  <div class="radar-meta">
+<section class="signal-zone">
+  <div class="signal-meta">
     <div>FREQ // <b>236.0 Hz</b> — DEDICATED</div>
     <div>TÍN HIỆU: <b id="sigCount">0</b></div>
-  </div>
-  <div class="radar" id="radar">
-    <div class="rring r1"></div><div class="rring r2"></div><div class="rring r3"></div>
-    <div class="cross h"></div><div class="cross v"></div>
-    <div class="sweep"></div>
-    <div class="center-dot"></div>
-    <div class="radar-empty" id="radarEmpty">Đang quét... chưa bắt được tín hiệu nào.<br>Hãy là người đầu tiên phát tín hiệu cho Cường.</div>
   </div>
   <div class="send-row">
     <button class="btn primary" id="openSend">◉ Phát tín hiệu</button>
@@ -582,7 +508,7 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
       <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
     <h2 class="m-title">Phát một tín hiệu</h2>
-    <p class="m-sub">Lời nhắn của bạn sẽ được mã hoá thành một tín hiệu trên màn radar — nơi mọi lời chúc cùng phát sóng tới Cường.</p>
+    <p class="m-sub">Lời nhắn của bạn sẽ được hiển thị trong nhật ký tín hiệu — nơi mọi lời chúc cùng phát sóng tới Cường.</p>
     <div class="field">
       <label for="inpName">// Nguồn phát (tuỳ chọn)</label>
       <input type="text" id="inpName" placeholder="vd: Linh từ Hà Nội" maxlength="40" />
@@ -664,7 +590,6 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 let wishes = [];
 const seenIds = new Set();
 const $ = id => document.getElementById(id);
-const radar = () => $('radar');
 
 function normalize(row){
   return {
@@ -684,65 +609,6 @@ function freqStamp(id){
   let h=0; const str=String(id);
   for(let i=0;i<str.length;i++){ h=(h*31+str.charCodeAt(i))>>>0; }
   return (200 + (h % 600) / 10).toFixed(1) + ' Hz';
-}
-
-function seededRand(seed, salt){
-  let h = 2166136261 >>> 0;
-  const str = String(seed) + '|' + salt;
-  for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
-  return (h >>> 0) / 4294967295;
-}
-function candidatePos(seed, attempt){
-  const ang = seededRand(seed, 'a'+attempt) * Math.PI * 2;
-  const rad = 0.12 + Math.sqrt(seededRand(seed, 'r'+attempt)) * 0.76;
-  return {
-    left: 50 + Math.cos(ang) * rad * 50,
-    top:  50 + Math.sin(ang) * rad * 50,
-  };
-}
-
-function renderAllBlips(freshId){
-  const host = radar();
-  if(!host) return;
-  host.querySelectorAll('.blip').forEach(b=> b.remove());
-
-  const placed = [];
-  const total = wishes.length;
-  let minDist = total > 60 ? 5.5 : total > 35 ? 7 : 9;
-
-  wishes.forEach((w) => {
-    let pos = null;
-    let best = null, bestMin = -1;
-    for(let attempt=0; attempt<24; attempt++){
-      const c = candidatePos(w.id, attempt);
-      let nearest = Infinity;
-      for(const p of placed){
-        const dx = c.left - p.left, dy = c.top - p.top;
-        const d = Math.sqrt(dx*dx + dy*dy);
-        if(d < nearest) nearest = d;
-      }
-      if(nearest >= minDist){ pos = c; break; }
-      if(nearest > bestMin){ bestMin = nearest; best = c; }
-    }
-    if(!pos) pos = best;
-    placed.push(pos);
-
-    const el = document.createElement('div');
-    el.className = 'blip' + (w.id === freshId ? ' fresh' : '');
-    el.style.left = pos.left + '%';
-    el.style.top = pos.top + '%';
-    el.style.animationDelay = (seededRand(w.id,'d') * 2.6) + 's';
-    el.title = w.name;
-    el.addEventListener('click', ()=> openRead(w));
-    host.appendChild(el);
-  });
-}
-
-function emitPulse(){
-  const e = document.createElement('div');
-  e.className = 'emit';
-  radar().appendChild(e);
-  setTimeout(()=> e.remove(), 1500);
 }
 
 const FEED_STEP = 12;
@@ -786,14 +652,12 @@ function escapeHtml(s){
 
 function updateCount(){
   $('sigCount').textContent = wishes.length;
-  $('radarEmpty').style.display = wishes.length ? 'none' : 'block';
 }
 
-function addWish(w, fresh){
+function addWish(w){
   if(seenIds.has(w.id)) return;
   seenIds.add(w.id);
   wishes.push(w);
-  renderAllBlips(fresh ? w.id : null);
   renderFeed();
   updateCount();
 }
@@ -830,7 +694,6 @@ $('submitBtn').addEventListener('click', async ()=>{
   const btn = $('submitBtn'); btn.disabled=true; btn.textContent='ĐANG PHÁT...';
 
   // keep schema-compatible x/y/size values
-  const seed = Date.now() + '' + Math.random();
   const px = Math.random()*100, py = Math.random()*100, ps = 8 + Math.random()*6;
 
   const { data, error } = await sb.from('wishes').insert({
@@ -842,8 +705,7 @@ $('submitBtn').addEventListener('click', async ()=>{
   btn.disabled=false; btn.textContent='◉ PHÁT TÍN HIỆU';
   if(error){ console.error(error); alert('Lỗi khi gửi. Thử lại nhé!'); return; }
 
-  emitPulse();
-  addWish(normalize(data), true);
+  addWish(normalize(data));
   closeSend();
   showToast();
   $('inpMsg').value=''; $('inpName').value=''; $('charCount').textContent='280'; $('charCount').classList.remove('warn');
@@ -865,13 +727,12 @@ async function load(){
     const w = normalize(row);
     if(!seenIds.has(w.id)){ seenIds.add(w.id); wishes.push(w); }
   });
-  renderAllBlips(null);
   renderFeed();
   updateCount();
 
   sb.channel('wishes-realtime')
     .on('postgres_changes', { event:'INSERT', schema:'public', table:'wishes' }, payload=>{
-      addWish(normalize(payload.new), true);
+      addWish(normalize(payload.new));
     })
     .subscribe();
 }
@@ -886,7 +747,7 @@ document.addEventListener('DOMContentLoaded', load);
   setTimeout(play, 400);
 })();
 
-/* show FAB after scrolling past radar */
+/* show FAB after scrolling past the signal controls */
 window.addEventListener('scroll', ()=>{
   $('fab').style.display = window.scrollY > 600 ? 'inline-flex' : 'none';
 });
