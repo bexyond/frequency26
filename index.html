@@ -415,6 +415,12 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
   .cd-cell { min-width: 64px; }
   .head { padding-left: 12px; padding-right: 12px; }
 }
+@media (max-width: 520px){
+  .cd-done {
+    flex-direction: column; flex-wrap: nowrap; white-space: nowrap;
+    font-size: min(4.2vw, 22px); letter-spacing: 0.05em; padding-inline: 0;
+  }
+}
 @media (max-width: 360px){
   .subtitle { font-size: 8px; letter-spacing: 0.03em; }
 }
@@ -440,7 +446,7 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
 <header class="head">
   <div class="kicker">Fan Signal Project</div>
   <h1 class="title">FREQUENCY <span class="x">26</span></h1>
-  <div class="subtitle">Tín hiệu sinh nhật cho Bạch Hồng Cường</div>
+  <div class="subtitle">Tín hiệu cho Bạch Hồng Cường</div>
   <p class="tagline">Trạm thu nhận lời chúc đã mở - Gửi lời chúc của bạn như một tín hiệu, hiển thị cùng những lời chúc khác đến Cường trong nhật ký tín hiệu</p>
 
   <div class="countdown" id="countdown">
