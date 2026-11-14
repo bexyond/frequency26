@@ -500,12 +500,12 @@ body[data-theme="light"] .modal.transmit::before { mix-blend-mode: multiply; opa
     <p class="m-sub">Lời nhắn của bạn sẽ được hiển thị trong nhật ký tín hiệu — nơi mọi lời chúc cùng phát sóng tới Cường.</p>
     <div class="field">
       <label for="inpName">// Nguồn phát (tuỳ chọn)</label>
-      <input type="text" id="inpName" placeholder="vd: Linh từ Hà Nội" maxlength="40" />
+      <input type="text" id="inpName" placeholder="Bạch hồng Hà Nội" maxlength="40" />
     </div>
     <div class="field">
       <label for="inpMsg">// Nội dung tín hiệu</label>
-      <textarea id="inpMsg" placeholder="Chúc Cường tuổi 26 tràn ngập ánh sáng và những bước đi vững vàng..." maxlength="280"></textarea>
-      <div class="char-count" id="charCount">280</div>
+      <textarea id="inpMsg" placeholder="Gửi lời yêu thương đến Chủ vườn ở đâyy" maxlength="500"></textarea>
+      <div class="char-count" id="charCount">500</div>
     </div>
     <button class="btn primary tx-btn" id="submitBtn">◉ PHÁT TÍN HIỆU</button>
   </div>
@@ -671,7 +671,7 @@ $('sendClose').addEventListener('click', closeSend);
 $('sendModal').addEventListener('click', e=>{ if(e.target===$('sendModal')) closeSend(); });
 
 $('inpMsg').addEventListener('input', ()=>{
-  const left = 280 - $('inpMsg').value.length;
+  const left = $('inpMsg').maxLength - $('inpMsg').value.length;
   const c = $('charCount'); c.textContent = left;
   c.classList.toggle('warn', left < 30);
 });
@@ -686,7 +686,7 @@ $('submitBtn').addEventListener('click', async ()=>{
 
   const { data, error } = await sb.from('wishes').insert({
     name: $('inpName').value.trim().slice(0,40) || null,
-    message: msg.slice(0,280),
+    message: msg.slice(0,$('inpMsg').maxLength),
     x: px, y: py, size: ps,
   }).select().single();
 
@@ -696,7 +696,7 @@ $('submitBtn').addEventListener('click', async ()=>{
   addWish(normalize(data));
   closeSend();
   showToast();
-  $('inpMsg').value=''; $('inpName').value=''; $('charCount').textContent='280'; $('charCount').classList.remove('warn');
+  $('inpMsg').value=''; $('inpName').value=''; $('charCount').textContent=$('inpMsg').maxLength; $('charCount').classList.remove('warn');
   $('fab').style.display='inline-flex';
 });
 
